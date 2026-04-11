@@ -16,11 +16,10 @@ def brownian_motion(dt: float, t: float) -> float:
         ブラウン運動の最終的な位置
     """
     sample_size = int(t / dt)
-    t_list = np.arange(0, t, dt)
-    dW_list = np.sqrt(t_list) * np.random.randn(sample_size)
-    W_list = np.cumsum(dW_list)
+    dW_list = np.sqrt(dt) * np.random.randn(sample_size)
+    B_t = np.sum(dW_list)
 
-    return W_list[-1]
+    return B_t
 
 def multivariable_brownian_motion(dt: float, t: float, dim: int) -> np.ndarray:
     """多次元ブラウン運動をシミュレーションする関数
