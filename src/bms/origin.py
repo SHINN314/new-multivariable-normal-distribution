@@ -1,6 +1,6 @@
-import distribution.t5ugu.main as dist_main
-import feature_value.feature_value as feature_value
-import visualize.visualize as visualize
+import bms.distribution.t5ugu.main as dist_main
+import bms.feature_value.feature_value as feature_value
+import bms.visualize.visualize as visualize
 import numpy as np
 
 
