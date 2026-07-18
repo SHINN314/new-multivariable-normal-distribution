@@ -1,5 +1,5 @@
-import distribution.t5ugu.main as dist_main
-import feature_value.feature_value as feature_value
+import bms.distribution.t5ugu.main as dist_main
+import bms.feature_value.feature_value as feature_value
 
 
 def run_pipeline(num: int = 2000, dim: int = 2):
