@@ -48,8 +48,8 @@ Generate sample paths by Euler-Maruyama method
 |name|type|default|description|
 |:---|:---|:---|:---|
 |return|np.ndarray(nop,nos)|-|generated sample paths|
-|mu|func|-|arg is (x, t)|
-|si|func|-|arg is (x, t)|
+|mu|func(x, t)|-|drift|
+|si|func(x, t)|-|diffusion|
 |y0|np.ndarray(nop)|zeros|initial value|
 |sp|class bm|-|source of stochastic process like Brownian Motion|
 
@@ -70,3 +70,6 @@ estimate drift and diffusion parameter in each division
 # Memo
 - how to prohibit reassignment of bm
 - file division improvement
+- all should process have class instance?
+- sdeint is a method of source process?
+- venv dependencies should be provised. it has some unused packages
