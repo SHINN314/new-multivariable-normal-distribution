@@ -35,10 +35,9 @@ make sure to label the conditions in the graph
 |name|type|default|description|
 |:---|:---|:---|:---|
 |return|list|-|\[mean, std\]
-|ps|np.ndarray(nop,nod,nos)|-|sample paths|
-|time|float(nos)|-||
+|ps|np.ndarray(nop,nos)|-|sample paths to be pllotted|
+|time|float(nos)|-|time frindged to the sample paths|
 |filename|str|None|if None show() else savefig()|
-<!-- |fig|Figure|None|| -->
 
 ## func sdeint
 
