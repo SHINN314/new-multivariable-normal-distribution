@@ -7,8 +7,7 @@ def run_pipeline(num: int = 2000, dim: int = 2, visualize_max_points: int = 2000
 	"""distribution の生成結果を feature_value に渡して統計量を計算する。"""
 	samples = dist_main.normal(num=num, dim=dim)
 
-	# feature_value.mycovs は「行=特徴量, 列=サンプル」を想定しているため転置する
-	cov_matrix = feature_value.mycovs(samples.T)
+	cov_matrix = feature_value.mycovs(samples)
 	means = [feature_value.mymean(samples[:, d]) for d in range(dim)]
 	stds = [feature_value.mysd(samples[:, d]) for d in range(dim)]
 
