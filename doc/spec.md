@@ -15,17 +15,16 @@ Manage Brownian motions, which is the source of randomness in the system.
 |:---|:---|:---|:---|
 |eot|float|1|The end of time point|
 |nos|int|10|Number of time steps|
-|time|float(nos)|-|linspaced time from 0 to et|
+|time|float(nos)|-|linspaced time from 0 to eot|
 |nop|int|1|Number of paths|
-|nod|int|1|Dimension|
-|ps|np.ndarray(nop,nos,nod)|-|sample paths|
-|dps|np.ndarray(nop,nos,nod)|-|difference of sample paths|
+|dps|np.ndarray(nop,nos)|-|difference of sample paths|
+|ps|np.ndarray(nop,nos)|-|sample paths|
 
 ### Method
 
 |name|return|arg|description|
 |:---|:---|:---|:---|
-|init||||
+|init|-|eot, nos, nop|set time, dps, ps arccordingly|
 
 ## func plot_ps
 
