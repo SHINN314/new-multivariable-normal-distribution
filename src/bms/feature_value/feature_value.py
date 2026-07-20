@@ -1,41 +1,39 @@
 import numpy as np
 
-def mymean(x):
-    n = len(x)
-    s = 0
-    for i in range(n):
-        s += x[i]
-    s /= n
-    return s
+def mymean(x: list[float]):
+    sample_num = len(x)
+    sum = 0
+    for i in range(sample_num):
+        sum += x[i]
+    return sum / sample_num
 
-def mycov(x, y):
+def mycov(x: list[float], y: list[float]):
     mx = mymean(x)
     my = mymean(y)
-    n = len(x)
-    s = 0
-    for i in range(n):
-        s += (x[i] - mx) * (y[i] - my)
-    s /= n
-    return s
+    sample_num = len(x)
+    sq_dev_sum = 0
+    for i in range(sample_num):
+        sq_dev_sum += (x[i] - mx) * (y[i] - my)
+    return sq_dev_sum / sample_num
 
-def mycovs(x):
-    n = len(x)
-    c = np.zeros([n, n])
-    for i in range(n):
-        c[i][i] = mycov(x[i], x[i])
-        for j in range(n-i):
-            c[i][j] = mycov(x[i], x[j])
-            c[j][i] = c[i][j]
-    return c
+def mycovs(x: np.ndarray):
+    dim = x.shape[1]
+    cov = np.zeros([dim, dim])
+    for i in range(dim):
+        cov[i][i] = mycov(x[:,i], x[:,i])
+        for j in range(dim-i):
+            cov[i][j] = mycov(x[:,i], x[:,j])
+            cov[j][i] = cov[i][j]
+    return cov
 
-def mysd(x):
+def mysd(x: list[float]):
     return np.sqrt(mycov(x, x))
 
 if __name__ == "__main__":
     # print(len(np.array([1, 0])))
-    x = [
+    x = np.array([
         [0, 1, 2],
         [1, 2, 3],
         [0, 0, 9]
-    ]
+    ])
     print(mycovs(x))
