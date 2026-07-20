@@ -1,32 +1,30 @@
 import numpy as np
 
 def mymean(x):
-    n = len(x)
-    s = 0
-    for i in range(n):
-        s += x[i]
-    s /= n
-    return s
+    sample_num = len(x)
+    sum = 0
+    for i in range(sample_num):
+        sum += x[i]
+    return sum / sample_num
 
 def mycov(x, y):
     mx = mymean(x)
     my = mymean(y)
-    n = len(x)
-    s = 0
-    for i in range(n):
-        s += (x[i] - mx) * (y[i] - my)
-    s /= n
-    return s
+    sample_num = len(x)
+    sq_dev_sum = 0
+    for i in range(sample_num):
+        sq_dev_sum += (x[i] - mx) * (y[i] - my)
+    return sq_dev_sum / sample_num
 
-def mycovs(x):
-    n = len(x)
-    c = np.zeros([n, n])
-    for i in range(n):
-        c[i][i] = mycov(x[i], x[i])
-        for j in range(n-i):
-            c[i][j] = mycov(x[i], x[j])
-            c[j][i] = c[i][j]
-    return c
+def mycovs(x: np.ndarray):
+    dim = x.shape[1]
+    cov = np.zeros([dim, dim])
+    for i in range(dim):
+        cov[i][i] = mycov(x[:,i], x[:,i])
+        for j in range(dim-i):
+            cov[i][j] = mycov(x[:,i], x[:,j])
+            cov[j][i] = cov[i][j]
+    return cov
 
 def mysd(x):
     return np.sqrt(mycov(x, x))
