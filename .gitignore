@@ -3,6 +3,7 @@
 
 # vscode
 .vscode/
+.vscode/*
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
