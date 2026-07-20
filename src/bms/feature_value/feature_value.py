@@ -1,13 +1,13 @@
 import numpy as np
 
-def mymean(x):
+def mymean(x: list[float]):
     sample_num = len(x)
     sum = 0
     for i in range(sample_num):
         sum += x[i]
     return sum / sample_num
 
-def mycov(x, y):
+def mycov(x: list[float], y: list[float]):
     mx = mymean(x)
     my = mymean(y)
     sample_num = len(x)
@@ -26,14 +26,14 @@ def mycovs(x: np.ndarray):
             cov[j][i] = cov[i][j]
     return cov
 
-def mysd(x):
+def mysd(x: list[float]):
     return np.sqrt(mycov(x, x))
 
 if __name__ == "__main__":
     # print(len(np.array([1, 0])))
-    x = [
+    x = np.array([
         [0, 1, 2],
         [1, 2, 3],
         [0, 0, 9]
-    ]
+    ])
     print(mycovs(x))
