@@ -61,11 +61,11 @@ estimate drift and diffusion parameter in each division
 
 |name|type|default|description|
 |:---|:---|:---|:---|
-|return|
-|ps|np.ndarray(nop,nod,nos)|-|sample paths|
-|t_div|np.ndarray(ntd)|-|provide time division|
-|s_div|np.ndarray(nsd)|-|provide space division|
-|
+|return|list|-| \[ mu\[nsd, ntd\], si\[nsd, ntd\] \]|
+|ps|np.ndarray\[nop,nos\]|-|sample paths|
+|time|float\[nos\]|-|time frindged to the sample paths|
+|t_div|np.ndarray\[ntd\]|-|provide time division|
+|s_div|np.ndarray\[nsd\]|-|provide space division|
 
 # Memo
 - how to prohibit reassignment of bm
