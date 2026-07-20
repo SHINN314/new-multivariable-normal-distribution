@@ -47,11 +47,11 @@ Generate sample paths by Euler-Maruyama method
 
 |name|type|default|description|
 |:---|:---|:---|:---|
-|return|np.ndarray(nop,nod,nos)|-|generated sample paths|
-|func|||arg is (x, t)|
-|y0|np.ndarray(nop,nod)|zeros||
-|t|np.ndarray(nos)|-|time|
-|dps|np.ndarray(nop,nod,nos)|-|difference of sample paths|
+|return|np.ndarray(nop,nos)|-|generated sample paths|
+|mu|func|-|arg is (x, t)|
+|si|func|-|arg is (x, t)|
+|y0|np.ndarray(nop)|zeros|initial value|
+|sp|class bm|-|source of stochastic process like Brownian Motion|
 
 ## est
 
