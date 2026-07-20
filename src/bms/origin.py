@@ -1,8 +1,7 @@
-import bms.distribution.t5ugu.main as dist_main
-import bms.feature_value.feature_value as feature_value
-import bms.visualize.visualize as visualize
+import distribution.t5ugu.main as dist_main
+import feature_value.feature_value as feature_value
+import visualize.visualize as visualize
 import numpy as np
-
 
 def run_pipeline(num: int = 2000, dim: int = 2, visualize_max_points: int = 200000):
 	"""distribution の生成結果を feature_value に渡して統計量を計算する。"""
