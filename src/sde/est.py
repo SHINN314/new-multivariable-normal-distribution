@@ -8,6 +8,7 @@ def est(ps: np.ndarray, time: list[float], t_div: list[float], s_div: list[float
     assert len(time) == noS
 
     ntd = len(t_div)
+    assert time[0] == t_div[0] and time[-1] == t_div[-1]
     s_div = [-np.inf] + s_div + [np.inf]
     nsd = len(s_div)
     assert ntd < noS
@@ -27,7 +28,7 @@ def est(ps: np.ndarray, time: list[float], t_div: list[float], s_div: list[float
         tdiv_to_time[td] = last
 
     # まず、時間方向に区切る。
-    for td in range(ntd):
+    for td in range(ntd-1):
         ti = tdiv_to_time[td]
         dt = time[ti + 1] - time[ti]
 
@@ -51,7 +52,3 @@ def est(ps: np.ndarray, time: list[float], t_div: list[float], s_div: list[float
         va[:, td] = va[:, td] - mu[:, td] * mu[:, td] * dt
 
     return mu, np.sqrt(va)
-
-if __name__ == '__main__':
-    print(np.zeros((0, 10)))
-    print(bisect_left([], 0))
