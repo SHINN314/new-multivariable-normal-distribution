@@ -1,10 +1,10 @@
-from bm import bm_class
+from bm import BrownianMotion
 import numpy as np
 from typing import Callable
 
 # X_(i+1) = mu(X_i, t_i) Dt + sigma(X_i, t_i) DB
 
-def sdeint(bm: bm_class, mu: Callable[[float, float], float], sigma: Callable[[float, float], float], t: np.ndarray, y0: np.ndarray) -> np.ndarray:
+def sdeint(bm: BrownianMotion, mu: Callable[[float, float], float], sigma: Callable[[float, float], float], t: np.ndarray, y0: np.ndarray) -> np.ndarray:
     assert y0.shape == (bm.nop)
     assert t.shape == (bm.nos)
 
