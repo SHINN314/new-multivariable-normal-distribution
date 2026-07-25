@@ -1,7 +1,6 @@
 import numpy as np
 from bisect import bisect_left
 
-# t_div \subseteq time
 def est(ps: np.ndarray, time: list[float], t_div: list[float], s_div: list[float]) -> tuple[ np.ndarray, np.ndarray ]:
     # noS は 点の数 = 区間数 + 1
     nop, noS = ps.shape
@@ -13,13 +12,12 @@ def est(ps: np.ndarray, time: list[float], t_div: list[float], s_div: list[float
     assert ntd < noS
 
     mu = np.zeros((nsd, ntd))
-    si = np.zeros((nsd, ntd))
+    va = np.zeros((nsd, ntd))
 
     # tdiv の添え字を time の添え字に変換する配列
     tdiv_to_time = [0]*ntd
     # 現在は、tdiv 以上の最小の time を求めている
     # つまり、tdiv の左端での変化量だけ見る。
-    # NOTE: 一般には tdiv が time の部分集合ではないが、time よりは粗い
     last = 0
     for td in range(ntd):
         vtd = t_div[td]
@@ -42,13 +40,13 @@ def est(ps: np.ndarray, time: list[float], t_div: list[float], s_div: list[float
             sd = bisect_left(s_div, x)
             freq[sd] += 1
             mu[sd, td] += dx / dt
-            si[sd, td] += dx * dx / dt
+            va[sd, td] += dx * dx / dt
 
         # mu = E[dx / dt], si = E[dx^2/dt] - mu^2 dt
         for sd in range(nsd):
             if freq[sd] != 0:
                 mu[sd, td] /= freq[sd]
-                si[sd, td] /= freq[sd]
-        si[:, td] = np.sqrt(si[:, td] - mu[:, td] * mu[:, td] * dt)
+                va[sd, td] /= freq[sd]
+        va[:, td] = va[:, td] - mu[:, td] * mu[:, td] * dt
 
-    return mu, si
+    return mu, np.sqrt(va)
