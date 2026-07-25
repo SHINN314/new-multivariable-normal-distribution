@@ -3,7 +3,6 @@ import feature_value.feature_value as feature_value
 import visualize.visualize as visualize
 import numpy as np
 
-
 def run_brownian_pipeline(
 	dt: float = 0.1,
 	t: float = 1.0,
@@ -26,8 +25,7 @@ def run_brownian_pipeline(
 		num_samples=num_samples,
 	)
 
-	# mycovs は [次元, サンプル数] を想定するため転置して渡す
-	cov_matrix = feature_value.mycovs(samples.T)
+	cov_matrix = feature_value.mycovs(samples)
 	means = [feature_value.mymean(samples[:, d]) for d in range(dim)]
 	stds = [feature_value.mysd(samples[:, d]) for d in range(dim)]
 
