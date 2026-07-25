@@ -1,7 +1,7 @@
 import numpy as np
 import math
 
-class bm:
+class BrownianMotion:
     def __init__(self, eot=1.0, nos=10, nop=1):
         self.eot = eot
         self.nos = nos
