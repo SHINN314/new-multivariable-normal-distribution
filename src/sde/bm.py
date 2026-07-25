@@ -9,12 +9,16 @@ class BrownianMotion:
         self.nop = nop
         self.ps = np.zeros((self.nop,self.nos+1))
         self.dps = np.zeros((self.nop,self.nos+1))
+        dt = self.eot/self.nos
         for path_num in range(self.nop):
-            self.dps[path_num,0] = 0
             for step_num in range(self.nos):
                 x = np.random.uniform(0, 1)
                 y = np.random.uniform(0, 1)
-                dB = math.sqrt( -2 * math.log(x) * ( self.eot/self.nos ) ) * math.cos( 2 * math.pi * y )
-                self.dps[path_num,step_num+1] = dB
+                dB = math.sqrt( -2 * math.log(x) * dt ) * math.cos( 2 * math.pi * y )
+                self.dps[path_num,step_num] = dB
                 self.ps[path_num,step_num+1] = self.ps[path_num,step_num] + dB
+            x = np.random.uniform(0, 1)
+            y = np.random.uniform(0, 1)
+            dB = math.sqrt( -2 * math.log(x) * dt ) * math.cos( 2 * math.pi * y )
+            self.dps[path_num,self.nos] = dB
         
