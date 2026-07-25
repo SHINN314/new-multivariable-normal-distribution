@@ -5,7 +5,7 @@ class BrownianMotion:
     def __init__(self, eot=1.0, nos=10, nop=1):
         self.eot = eot
         self.nos = nos
-        self.time = np.linspace(0, 1, 11)
+        self.time = np.linspace(0, eot, nos+1, endpoint=True)
         self.nop = nop
         self.ps = np.zeros((self.nop,self.nos+1))
         self.dps = np.zeros((self.nop,self.nos+1))
