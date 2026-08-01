@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 from environment import FIG_ROOT
 
-def plot_ps(ps: np.ndarray, time: float, filename: str | None = None) -> list[np.ndarray]:
+def plot_ps(ps: np.ndarray, time: np.ndarray, filename: str | None = None) -> list[np.ndarray]:
     """Plot sample paths, mean and std path.
     Show or save the graph.
     Make sure to label the conditions in the graph.
@@ -12,7 +12,8 @@ def plot_ps(ps: np.ndarray, time: float, filename: str | None = None) -> list[np
     ----------
     ps: np.ndarray
         Sample paths.
-    time: float
+    time: np.ndarray
+        Time steps.
     filename: str | None
         If filename is None, show the graph, else save the graph to filename.
     """
@@ -20,11 +21,9 @@ def plot_ps(ps: np.ndarray, time: float, filename: str | None = None) -> list[np
     mean_path = np.mean(ps, axis=0)
     std_path = np.std(ps, axis=0)
 
-    time_steps = np.linspace(0, time, ps.shape[1])
-
     fig, ax = plt.subplots(figsize=(8, 6))
     ax.fill_between(
-        time_steps,
+        time,
         mean_path - std_path,
         mean_path + std_path,
         color='crimson',
@@ -32,26 +31,26 @@ def plot_ps(ps: np.ndarray, time: float, filename: str | None = None) -> list[np
         label='Mean ± Std',
     )  # plot std band
     ax.plot(
-        time_steps,
+        time,
         ps.T,
         color="steelblue",
         alpha=0.75,
         linewidth=0.8,
     ) # plot sample paths
     ax.plot(
-        time_steps,
+        time,
         mean_path,
         color="crimson",
         linewidth=2.5,
         label="Mean",
     ) # plot mean path
-    ax.set_title(f'Sample Paths (t={time})')
+    ax.set_title(f'Sample Paths (t={time[-1]})')
     ax.set_xlabel('Time')
     ax.set_ylabel('Position')
     fig.tight_layout()
 
     if filename is None:
-        fig.show()
+        plt.show()
     else:
         FIG_ROOT.mkdir(parents=True, exist_ok=True)
         fig.savefig(FIG_ROOT / filename)
@@ -61,8 +60,7 @@ def plot_ps(ps: np.ndarray, time: float, filename: str | None = None) -> list[np
     return [mean_path, std_path]
 
 if __name__ == "__main__":
-    # Test the plot_ps function with Brownian motion sample paths
-    from bm import BrownianMotion
-
-    bm = BrownianMotion(nos=100, nop=10)
-    plot_ps(bm.ps, bm.eot)
+    # Test the function with random data
+    time = np.linspace(0, 1, 100)
+    ps = np.random.randn(10, 100)  # 10 sample paths
+    plot_ps(ps, time)
