@@ -51,7 +51,7 @@ def est(ps: np.ndarray, time: list[float], t_div: list[float], s_div: list[float
             mu[sd, td] += dx / dt
             va[sd, td] += dx * dx / dt
 
-        # mu = E[dx / dt], si = E[dx^2/dt] - mu^2 dt
+        # mu = E[dx / dt], va = E[dx^2/dt] - mu^2 dt
         for sd in range(nsd):
             if freq[sd] != 0:
                 mu[sd, td] /= freq[sd]
