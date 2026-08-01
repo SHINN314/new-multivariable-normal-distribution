@@ -22,18 +22,29 @@ def plot_ps(ps: np.ndarray, time: float, filename: str | None) -> list[np.ndarra
 
     time_steps = np.linspace(0, time, ps.shape[1])
 
-    plt.plot(time_steps, ps.T, color='lightgray', alpha=0.5, label='Sample Paths') # plot all sample paths
-    plt.plot(time_steps, mean_path, color='black', label='Mean Path') # plot mean path
-    plt.fill_between(time_steps, mean_path - std_path, mean_path + std_path, color='blue', alpha=0.2, label='Std Path') # plot std path
-    plt.title(f'Sample Paths of Brownian Motion (t={time})')
-    plt.xlabel('Time')
-    plt.ylabel('Position')
-    
+    fig, ax = plt.subplots(figsize=(8, 6))
+    ax.plot(time_steps, ps.T, color='lightgray', alpha=0.5, label='Sample Paths')  # plot all sample paths
+    ax.plot(time_steps, mean_path, color='black', label='Mean Path')  # plot mean path
+    ax.fill_between(
+        time_steps,
+        mean_path - std_path,
+        mean_path + std_path,
+        color='blue',
+        alpha=0.2,
+        label='Mean ± Std',
+    )  # plot std band
+    ax.set_title(f'Sample Paths (t={time})')
+    ax.set_xlabel('Time')
+    ax.set_ylabel('Position')
+    ax.legend()
+    fig.tight_layout()
+
     if filename is None:
         plt.show()
     else:
-        plt.savefig(FIG_ROOT / filename)
-        plt.clf()
-        plt.close()
+        FIG_ROOT.mkdir(parents=True, exist_ok=True)
+        fig.savefig(FIG_ROOT / filename)
+
+    plt.close(fig)
 
     return [mean_path, std_path]
