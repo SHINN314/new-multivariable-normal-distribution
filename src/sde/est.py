@@ -1,16 +1,19 @@
 import numpy as np
 from bisect import bisect_right
 
+# 時刻 t_div[i] から t_div[i+1]、変位 s_div[j] から s_div[j+1] の領域で、mu, sigma が一定であると仮定したとき、
+# その値を mu[i, j-1], si[i, j-1] として出力する。
+# t_div は time よりも粗く、time と端点を共有しなければならない。
+# s_div は、さらに左右に (-infinity) と (+infinity) がついているとみなす。
+# ちょうど時刻 t_div[i] のときの増分を採用して、計算をおこなう。
 def est(ps: np.ndarray, time: list[float], t_div: list[float], s_div: list[float]) -> tuple[ np.ndarray, np.ndarray ]:
     # noS は 点の数 = 区間数 + 1
     nop, noS = ps.shape
-    assert type(nop) == int and type(noS) == int
-    assert len(time) == noS
+    assert type(nop) == int and type(noS) == int, "ps が 2 次元配列でない"
+    assert len(time) == noS, "ps の見本経路の長さと time の長さが一致していない"
 
-    # t_div は time よりも粗い
-    assert len(t_div) <= len(time)
-    # t_div は time と両端を共有する
-    assert time[0] == t_div[0] and time[-1] == t_div[-1]
+    assert len(t_div) <= len(time), "t_div が time よりも粗くない"
+    assert time[0] == t_div[0] and time[-1] == t_div[-1], "t_div が time と両端を共有していない"
 
     # t_div の最後は time の最後なので、情報を捨てる
     ntd = len(t_div) - 1
@@ -24,8 +27,6 @@ def est(ps: np.ndarray, time: list[float], t_div: list[float], s_div: list[float
 
     # tdiv の添え字を time の添え字に変換する配列
     tdiv_to_time = [0]*ntd
-    # 現在は、tdiv 以上の最小の time を求めている
-    # つまり、tdiv の左端での変化量だけ見る。
     last = 0
     for td in range(ntd):
         vtd = t_div[td]
@@ -37,6 +38,7 @@ def est(ps: np.ndarray, time: list[float], t_div: list[float], s_div: list[float
     for td in range(ntd):
         ti = tdiv_to_time[td]
         dt = time[ti + 1] - time[ti]
+        assert dt > 0, "time に重複がある"
 
         freq = [0]*nsd
         # 見本経路ごとに変位を分類し、各 dx を収集する
