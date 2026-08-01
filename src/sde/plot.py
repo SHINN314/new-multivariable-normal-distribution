@@ -1,6 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+from bm import bm
+
 def plot_ps(ps: np.ndarray, time: float, filename: str | None) -> list[float, float]:
     """Plot sample paths, mean and std path.
     Show or save the graph.
