@@ -1,5 +1,5 @@
 import numpy as np
-from bisect import bisect_left
+from bisect import bisect_right
 
 def est(ps: np.ndarray, time: list[float], t_div: list[float], s_div: list[float]) -> tuple[ np.ndarray, np.ndarray ]:
     # noS は 点の数 = 区間数 + 1
@@ -7,12 +7,18 @@ def est(ps: np.ndarray, time: list[float], t_div: list[float], s_div: list[float
     assert type(nop) == int and type(noS) == int
     assert len(time) == noS
 
-    ntd = len(t_div)
+    # t_div は time よりも粗い
+    assert len(t_div) <= len(time)
+    # t_div は time と両端を共有する
     assert time[0] == t_div[0] and time[-1] == t_div[-1]
-    s_div = [-np.inf] + s_div + [np.inf]
-    nsd = len(s_div)
-    assert ntd < noS
 
+    # t_div の最後は time の最後なので、情報を捨てる
+    ntd = len(t_div) - 1
+    SDiv = [-np.inf] + s_div
+    # 空間の区切りは ( SD[0], SD[1] ), ..., [ SD[len(SD)-1], +inf ) の len(SDiv) 個
+    nsd = len(SDiv)
+
+    # 時間の区切りは [ td[0], td[1] ), ..., [ td[ntd-1], td[ntd = len(td)-1] ) の ntd 個
     mu = np.zeros((nsd, ntd))
     va = np.zeros((nsd, ntd))
 
@@ -28,7 +34,7 @@ def est(ps: np.ndarray, time: list[float], t_div: list[float], s_div: list[float
         tdiv_to_time[td] = last
 
     # まず、時間方向に区切る。
-    for td in range(ntd-1):
+    for td in range(ntd):
         ti = tdiv_to_time[td]
         dt = time[ti + 1] - time[ti]
 
@@ -38,8 +44,9 @@ def est(ps: np.ndarray, time: list[float], t_div: list[float], s_div: list[float
             x = ps[p, ti]
             dx = ps[p, ti + 1] - x
 
-            # s_div の中で、x 以下で最大のもののインデックス
-            sd = bisect_left(s_div, x)
+            # s_div の中で、x 以下で最大のもののインデックスを探す。
+            # bisect_right は x より大きい最小のもののインデックス
+            sd = bisect_right(SDiv, x) - 1
             freq[sd] += 1
             mu[sd, td] += dx / dt
             va[sd, td] += dx * dx / dt
