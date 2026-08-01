@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 from environment import FIG_ROOT
 
-def plot_ps(ps: np.ndarray, time: float, filename: str | None) -> list[np.ndarray, np.ndarray]:
+def plot_ps(ps: np.ndarray, time: float, filename: str | None) -> list[np.ndarray]:
     """Plot sample paths, mean and std path.
     Show or save the graph.
     Make sure to label the conditions in the graph.
