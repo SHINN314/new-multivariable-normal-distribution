@@ -22,14 +22,6 @@ def plot_ps(ps: np.ndarray, time: np.ndarray, filename: str | None = None) -> li
     std_path = np.std(ps, axis=0)
 
     fig, ax = plt.subplots(figsize=(8, 6))
-    ax.fill_between(
-        time,
-        mean_path - std_path,
-        mean_path + std_path,
-        color='crimson',
-        alpha=0.2,
-        label='Mean ± Std',
-    )  # plot std band
     ax.plot(
         time,
         ps.T,
@@ -44,6 +36,20 @@ def plot_ps(ps: np.ndarray, time: np.ndarray, filename: str | None = None) -> li
         linewidth=2.5,
         label="Mean",
     ) # plot mean path
+    ax.plot(
+        time, 
+        mean_path + std_path,
+        color='crimson',
+        alpha=0.5,
+        linewidth=1.5,
+    ) # plot mean + std path
+    ax.plot(
+        time,
+        mean_path - std_path,
+        color='crimson',
+        alpha=0.5,
+        linewidth=1.5,
+    ) # plot mean - std path
     ax.set_title(f'Sample Paths (t={time[-1]})')
     ax.set_xlabel('Time')
     ax.set_ylabel('Position')
