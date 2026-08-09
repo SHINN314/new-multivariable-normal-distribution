@@ -17,7 +17,7 @@ def est(ps: np.ndarray, time: list[float], t_div: list[float], s_div: list[float
 
     # t_div の最後は time の最後なので、情報を捨てる
     ntd = len(t_div) - 1
-    SDiv = [-np.inf] + s_div
+    SDiv = [-np.inf, *s_div ]
     # 空間の区切りは ( SD[0], SD[1] ), ..., [ SD[len(SD)-1], +inf ) の len(SDiv) 個
     nsd = len(SDiv)
 
@@ -58,6 +58,9 @@ def est(ps: np.ndarray, time: list[float], t_div: list[float], s_div: list[float
             if freq[sd] != 0:
                 mu[sd, td] /= freq[sd]
                 va[sd, td] /= freq[sd]
+            else:
+                mu[sd, td] = None
+                va[sd, td] = None
         va[:, td] = va[:, td] - mu[:, td] * mu[:, td] * dt
 
     return mu, np.sqrt(va)
