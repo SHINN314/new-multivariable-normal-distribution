@@ -14,7 +14,7 @@ def est(ps: np.ndarray, time: list[float], t_div: list[float], s_div: list[float
 
     # t_div の最後は time の最後なので、情報を捨てる
     ntd = len(t_div) - 1
-    SDiv = [-np.inf] + s_div
+    SDiv = np.insert(s_div, 0, -np.inf)
     # 空間の区切りは ( SD[0], SD[1] ), ..., [ SD[len(SD)-1], +inf ) の len(SDiv) 個
     nsd = len(SDiv)
 
