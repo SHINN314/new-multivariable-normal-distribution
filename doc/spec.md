@@ -97,3 +97,4 @@ estimate drift and diffusion parameter in each division
 - all should process have class instance?
 - sdeint is a method of source process?
 - venv dependencies should be provised. it has some unused packages
+- compile a progress report

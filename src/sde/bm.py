@@ -21,4 +21,4 @@ class BrownianMotion:
             y = np.random.uniform(0, 1)
             dB = math.sqrt( -2 * math.log(x) * dt ) * math.cos( 2 * math.pi * y )
             self.dps[path_num,self.nos] = dB
-     
+        
