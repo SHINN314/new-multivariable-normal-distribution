@@ -24,7 +24,7 @@ Manage Brownian motions, which is the source of randomness in the system.
 
 |name|return|arg|description|
 |:---|:---|:---|:---|
-|init|-|eot, nos, nop|set time, dps, ps arccordingly|
+|init|-|eot, nos, nop|set time, dps, ps accordingly|
 
 ## func plot_ps
 
@@ -50,10 +50,9 @@ Generate sample paths by Euler-Maruyama method
 |return|np.ndarray(nop,nos)|-|generated sample paths|
 |mu|func(x, t)|-|drift|
 |si|func(x, t)|-|diffusion|
-|y0|np.ndarray(nop)|zeros|initial value|
-|sp|class bm|-|source of stochastic process like Brownian Motion|
+|y0|np.ndarray(nop)|zeros|initial value is as of yet set since nop is not allowed to access|
 
-## est
+## func est
 
 estimate drift and diffusion parameter in each division
 
@@ -73,3 +72,4 @@ estimate drift and diffusion parameter in each division
 - all should process have class instance?
 - sdeint is a method of source process?
 - venv dependencies should be provised. it has some unused packages
+- compile a progress report
